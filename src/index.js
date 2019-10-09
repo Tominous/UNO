@@ -97,13 +97,13 @@ client.frontend = frontend;
 
 
 process.on('exit', code => {
-    // console.info('Exiting! Serializing current games...');
-    // let inProgress = {};
-    // for (const id in games) {
-    //     inProgress[id] = games[id].serialize();
-    // }
-    // console.info('Serialized', Object.keys(inProgress).length, 'games! Saving...');
-    // fs.writeFileSync(path.join(__dirname, '..', 'current-games.json'), JSON.stringify(inProgress, null, 2), { encoding: 'utf8' });
+     console.info('Exiting! Serializing current games...');
+     let inProgress = {};
+     for (const id in games) {
+         inProgress[id] = games[id].serialize();
+     }
+     console.info('Serialized', Object.keys(inProgress).length, 'games! Saving...');
+     fs.writeFileSync(path.join(__dirname, '..', 'current-games.json'), JSON.stringify(inProgress, null, 2), { encoding: 'utf8' });
 });
 
 process.on('unhandledRejection', error => {
@@ -137,11 +137,11 @@ client.on('ready', async () => {
                 await channel.save();
             }
         }
-        // const currentGames = require('../current-games.json');
-        // for (const id in currentGames) {
-        //     let game = Game.deserialize(currentGames[id], client);
-        //     if (game) games[id] = game;
-        // }
+         const currentGames = require('../current-games.json');
+         for (const id in currentGames) {
+             let game = Game.deserialize(currentGames[id], client);
+             if (game) games[id] = game;
+         }
         console.info('Restored', channels.length, 'games.');
     } catch (err) {
         console.error('Issue restoring old games:', err);
@@ -159,9 +159,9 @@ client.on('warn', msg => {
     console.error(msg);
 });
 
-// client.on('debug', msg => {
-//     console.log(msg);
-// });
+ client.on('debug', msg => {
+     console.log(msg);
+ });
 
 client.on('connect', id => {
     console.log('Shard', id, 'has connected');
@@ -519,10 +519,10 @@ You can execute up to two commands in a single message by separating them with \
                     case 'WILD+4': {
                         game.log('color_change', msg.author.id, { color: card.colorName });
                         game.log('pickup', msg.author.id, { target: game.queue[1].id, amount: 4 });
-                        // let player = game.queue.shift();
+                         let player = game.queue.shift();
                         await game.deal(game.queue[1], 4);
 
-                        // game.queue.unshift(player);
+                         game.queue.unshift(player);
                         extra = `${game.queue[1].member.user.username} picks up 4! The current color is now **${card.colorName}**! `;
                         if (game.rules.DRAW_SKIP === true) {
                             extra += ' Also, skip a turn!';
