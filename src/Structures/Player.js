@@ -18,7 +18,7 @@ module.exports = class Player {
             channelId: this.game.channel.id,
             hand: this.hand
         });
-        // this.emit('cardsChanged', this.hand);
+         this.emit('cardsChanged', this.hand);
     }
 
     static deserialize(obj, game) {
