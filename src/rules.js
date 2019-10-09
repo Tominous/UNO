@@ -84,4 +84,4 @@ module.exports.rules = {
 };
 
 module.exports.ruleKeys = Object.keys(module.exports.rules);
-// module.exports.ruleKeys.sort();
+ module.exports.ruleKeys.sort();
